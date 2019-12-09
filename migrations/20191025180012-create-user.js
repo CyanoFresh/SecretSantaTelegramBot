@@ -10,23 +10,22 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        GroupId: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'Groups',
-            key: 'id',
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
         chat_id: {
           type: Sequelize.BIGINT,
           allowNull: false,
         },
-        name: {
-          type: Sequelize.STRING,
+        code: {
+          type: Sequelize.INTEGER,
           allowNull: false,
+        },
+        first_name: {
+          type: Sequelize.STRING(50),
+        },
+        last_name: {
+          type: Sequelize.STRING(50),
+        },
+        username: {
+          type: Sequelize.STRING(50),
         },
         createdAt: {
           allowNull: false,
@@ -40,7 +39,7 @@ module.exports = {
       throw err;
     }
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     const transaction = await queryInterface.sequelize.transaction();
 
     try {

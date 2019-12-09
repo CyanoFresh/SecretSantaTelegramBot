@@ -1,7 +1,7 @@
 {
-  "name": "tg-queue-bot",
+  "name": "secret-santa-bot",
   "version": "0.0.1",
-  "description": "Telegram Bot for creating queues",
+  "description": "Telegram Bot for organizing Secret Santa event on APEPS",
   "main": "index.js",
   "scripts": {
     "start": "node ./index.js",
@@ -9,19 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CyanoFresh/tg-queue-bot.git"
+    "url": "git+https://github.com/CyanoFresh/SecretSantaTelegramBot.git"
   },
   "keywords": [
     "telegram",
-    "bot",
-    "queue"
+    "bot"
   ],
   "author": "Alex Solomaha",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CyanoFresh/tg-queue-bot/issues"
+    "url": "https://github.com/CyanoFresh/SecretSantaTelegramBot/issues"
   },
-  "homepage": "https://github.com/CyanoFresh/tg-queue-bot#readme",
+  "homepage": "https://github.com/CyanoFresh/SecretSantaTelegramBot#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
     "mysql2": "^2.0.0",

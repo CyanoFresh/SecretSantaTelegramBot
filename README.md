@@ -1,7 +1,7 @@
-Telegram Queue Bot
+Secret Santa Bot
 ====
 
-Telegram bot for creating queue in group chat.
+Telegram bot for organizing Secret Santa event on APEPS
 
 By Alex Solomaha ([@CyanoFresh](https://t.me/cyanofresh))
 
@@ -10,14 +10,6 @@ Feel free to contribute :)
 
 ## Features
 
-- [x] Sign Up for chat group
-- [x] Randomized Queue
-- [x] Persistence - save and load queues from database
-- [x] Authentication for `/done` commands
-- [x] Telegram WebHooks - CPU and network optimization
-- [x] User status in queue - done or undone
-- [x] Use Telegram's inline buttons for navigation
-- [ ] Use `telegraf/micro` for lambda-like services
 
 ## Installation
 

@@ -1,13 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     chat_id: DataTypes.BIGINT,
-    name: DataTypes.STRING,
+    code: DataTypes.INTEGER,
+    first_name: DataTypes.STRING(50),
+    last_name: DataTypes.STRING(50),
+    username: DataTypes.STRING(50),
   }, {
     updatedAt: false,
   });
   User.associate = function(models) {
-    User.belongsTo(models.Group);
-    User.belongsToMany(models.Queue, { through: models.QueueUser });
+
   };
   return User;
 };

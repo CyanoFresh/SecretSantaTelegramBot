@@ -7,7 +7,7 @@ const session = require('telegraf/session');
 const config = require('./config');
 const { sequelize } = require('./models');
 const errorHandler = require('./middlewares/errorHandler');
-const { start, users, list, add, del, done } = require('./commands');
+const commands = require('./commands');
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
@@ -17,12 +17,7 @@ bot.use(errorHandler);
 bot.use(session());
 
 // Register commands
-start.register(bot);
-users.register(bot);
-list.register(bot);
-del.register(bot);
-add.register(bot);
-done.register(bot);
+commands(bot);
 
 sequelize
   .authenticate()

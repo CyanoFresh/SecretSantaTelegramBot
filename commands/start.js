@@ -1,81 +1,28 @@
-const Extra = require('telegraf/extra');
-const Markup = require('telegraf/markup');
-const { generateGroupHash } = require('../utils');
-const { Group, User } = require('../models');
+const { Markup } = require('telegraf');
+const { generate } = require('../services/code');
+const { User } = require('../models');
 
-const start = async (ctx) => {
-  const isFromGroup = ctx.update.message.chat.id < 0;
-
-  if (!isFromGroup && ctx.startPayload) {
-    const group = await Group.findOne({
-      where: {
-        hash: ctx.startPayload,
-      },
+module.exports = bot => {
+  bot.start(async (ctx) => {
+    let user = await User.findOne({
+      where: { chat_id: ctx.update.message.chat.id },
     });
 
-    if (!group) {
-      return ctx.reply(
-        'Добавьте бота в группу, в которой хотите создавать очереди',
-        Markup.inlineKeyboard([
-          Markup.urlButton('Добавить в группу', `https://telegram.me/${ctx.botInfo.username}?startgroup=startgroup`),
-        ]).extra(),
-      );
-    }
-
-    if (await User.count({
-      where: {
-        chat_id: ctx.update.message.from.id,
-        GroupId: group.id,
-      },
-    })) {
-      return ctx.replyWithMarkdown(`Ты уже участвуешь в очередях в группе *${group.name}*`);
-    }
-
-    let name;
-
-    if (ctx.from.first_name || ctx.from.last_name) {
-      name = (ctx.from.first_name || '') + ' ' + (ctx.from.last_name || '');
-    } else {
-      name = ctx.from.username;
-    }
-
-    const user = await User.create({
-      chat_id: ctx.update.message.from.id,
-      GroupId: group.id,
-      name,
-    });
-
-    return ctx.replyWithMarkdown(`Теперь вы участвуете в очередях в группе *${group.name}* под именем *${user.name}*`);
-  }
-
-  if (isFromGroup) {
-    let group = await Group.findOne({
-      where: {
+    if (!user) {
+      user = await User.create({
         chat_id: ctx.update.message.chat.id,
-      },
-    });
-
-    if (!group) {
-      group = await Group.create({
-        chat_id: ctx.update.message.chat.id,
-        name: ctx.update.message.chat.title,
-        hash: generateGroupHash(),
+        first_name: ctx.update.message.chat.first_name,
+        second_name: ctx.update.message.chat.second_name,
+        username: ctx.update.message.chat.username,
+        code: await generate(),
       });
     }
 
-    return ctx.reply('Нажми на кнопку, чтобы участвовать в очередях', Extra.markup(Markup.inlineKeyboard([
-      Markup.urlButton('Регистрация', `https://telegram.me/${ctx.botInfo.username}?start=${group.hash}`),
-    ])));
-  }
-
-  return ctx.reply(
-    'Добавьте бота в группу, в которой хотите создавать очереди',
-    Markup.inlineKeyboard([
-      Markup.urlButton('Добавить в группу', `https://telegram.me/${ctx.botInfo.username}?startgroup=startgroup`),
-    ]).extra(),
-  );
+    return ctx.replyWithMarkdown(
+      `Welcome\nTo become a Santa fill the form below`,
+      Markup.inlineKeyboard([
+        Markup.urlButton('Заполнить анкету', `https://docs.google.com/forms/d/e/1FAIpQLSevVHxC0PIgpQnEISphMZYKqTTUpb7HggZYUr1yJvyqRSaiDQ/viewform?usp=pp_url&entry.1755769369=${user.code}`),
+      ]).extra(),
+    );
+  });
 };
-
-start.register = bot => bot.start(start);
-
-module.exports = start;

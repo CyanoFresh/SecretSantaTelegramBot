@@ -1,7 +1,7 @@
 module.exports = {
-  doneUserAppend: ' ✅',
-  buttonsInRow: 3,
+  adminChatIds: process.env.ADMIN_CHAT_IDS.split(','),
   errorReportChatId: process.env.ERROR_CHAT_ID,
+  codeLength: 4,
   webhook: process.env.BOT_DOMAIN ? {
     domain: process.env.BOT_DOMAIN,
     port: process.env.BOT_PORT || 4000,
