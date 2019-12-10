@@ -1,5 +1,5 @@
 module.exports = {
-  adminChatIds: process.env.ADMIN_CHAT_IDS.split(','),
+  adminChatId: process.env.ADMIN_CHAT_ID,
   errorReportChatId: process.env.ERROR_CHAT_ID,
   codeLength: 4,
   webhook: process.env.BOT_DOMAIN ? {

@@ -3,7 +3,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const Telegraf = require('telegraf');
-const session = require('telegraf/session');
 const config = require('./config');
 const { sequelize } = require('./models');
 const errorHandler = require('./middlewares/errorHandler');
@@ -12,9 +11,7 @@ const commands = require('./commands');
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.catch((err) => console.error(err));
-
 bot.use(errorHandler);
-bot.use(session());
 
 // Register commands
 commands(bot);
